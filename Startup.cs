@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace ApiEmails
 {
@@ -28,9 +29,18 @@ namespace ApiEmails
                 { 
                     Title = "ApiEmails", 
                     Version = "V1", 
-                    Contact = new OpenApiContact() { Name = "Lucas Vieira", Email = "lucasvieiravicente1@gmail.com" },
+                    Contact = new OpenApiContact() 
+                    { 
+                        Name = "Lucas Vieira", 
+                        Email = "lucasvieiravicente1@gmail.com",
+                        Url = new Uri("https://webresumelucas.azurewebsites.net/")
+                    },
                     Description = "A simple API just to send e-mails",
-                    License = new OpenApiLicense() { Name = "MIT License" }                    
+                    License = new OpenApiLicense() 
+                    { 
+                        Name = "MIT License" ,
+                        Url = new Uri("https://www.mit.edu/~amini/LICENSE.md")
+                    }                    
                 });
             });
         }
