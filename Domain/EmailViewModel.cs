@@ -6,20 +6,11 @@ using System.Text.Json.Serialization;
 namespace ApiEmails.Domain
 {       
     public class EmailViewModel
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
-
-        [JsonPropertyName("phonenumber")]
-        public string PhoneNumber { get; set; }
-
-        [JsonPropertyName("subject")]
-        public string Subject { get; set; }
-
-        [JsonPropertyName("body")]
+    {        
+        public string Name { get; set; }      
+        public string Email { get; set; }        
+        public string PhoneNumber { get; set; }        
+        public string Subject { get; set; }        
         public string Body { get; set; }
 
         public Tuple<bool, string> IsValid()
