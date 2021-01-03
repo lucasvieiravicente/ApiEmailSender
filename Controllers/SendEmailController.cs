@@ -1,8 +1,10 @@
 ﻿using System;
 using ApiEmails.Domain;
 using ApiEmails.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ApiEmails.Controllers
 {
@@ -19,16 +21,22 @@ namespace ApiEmails.Controllers
             _appService = appService;
         }
 
-        [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)] 
-        public IActionResult SendEmail([FromBody]EmailViewModel email)
-        {          
-            if (!email.IsValid().Item1) return BadRequest(email.IsValid().Item2);
+        [HttpPost]        
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError)]
+        public IActionResult SendEmail(EmailViewModel email)
+        {
+            try
+            {
+                _appService.SendEmail(email);
 
-            _appService.SendEmail(email);
-
-            return Ok("E-mail enviado com sucesso");
+                return Ok("E-mail enviado com sucesso");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]

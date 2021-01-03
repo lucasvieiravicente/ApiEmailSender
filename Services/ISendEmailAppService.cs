@@ -1,9 +1,10 @@
 ﻿using ApiEmails.Domain;
+using System.Threading.Tasks;
 
 namespace ApiEmails.Services
 {
     public interface ISendEmailAppService
     {
-        void SendEmail(EmailViewModel email);
+        Task SendEmail(EmailViewModel email);
     }
 }

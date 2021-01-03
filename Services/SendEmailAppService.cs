@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using ApiEmails.Domain;
 using Microsoft.Extensions.Configuration;
 
@@ -24,7 +25,7 @@ namespace ApiEmails.Services
             _smtp =  _configuration["EmailsConfigs:Smtp"];
         }
 
-        public void SendEmail(EmailViewModel email)
+        public async Task SendEmail(EmailViewModel email)
         {
             MailMessage mail = new MailMessage()
             {
@@ -43,7 +44,7 @@ namespace ApiEmails.Services
 
                 smtp.Credentials = new NetworkCredential(_loginEmail, _loginPassword);
 
-                smtp.Send(mail);
+                smtp.SendAsync(mail, smtp);
             }
         }
     }
