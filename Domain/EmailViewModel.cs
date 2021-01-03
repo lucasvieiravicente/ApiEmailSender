@@ -10,9 +10,11 @@ namespace ApiEmails.Domain
         public string Name { get; set; } 
 
         [Required(ErrorMessage = ErrorMessages.EmailNecessary)]
+        [EmailAddress(ErrorMessage = ErrorMessages.EmailIncorrect)]
         public string Email { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.PhoneNecessary)]
+        [RegularExpression("[\\d]", ErrorMessage = ErrorMessages.PhoneIncorrect)]
         public string PhoneNumber { get; set; }    
 
         [Required(ErrorMessage = ErrorMessages.BodyNecessary)]
