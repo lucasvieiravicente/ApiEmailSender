@@ -14,7 +14,6 @@ namespace ApiEmails.Domain
         public string Email { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.PhoneNecessary)]
-        [RegularExpression("[\\d]", ErrorMessage = ErrorMessages.PhoneIncorrect)]
         public string PhoneNumber { get; set; }    
 
         [Required(ErrorMessage = ErrorMessages.BodyNecessary)]
