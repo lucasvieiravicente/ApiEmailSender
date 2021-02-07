@@ -14,6 +14,7 @@ namespace ApiEmails.Services
         private readonly string _loginEmail;
         private readonly string _loginPassword;
         private readonly string _smtp;
+        private const int _port = 587;
 
         public SendEmailAppService(IConfiguration configuration)
         {
@@ -38,16 +39,17 @@ namespace ApiEmails.Services
             };
             mail.To.Add(_receiverEmail);
 
-            using(var smtp = new SmtpClient(_smtp, 587))
+            var smtp = new SmtpClient(_smtp, _port)
             {
-                smtp.EnableSsl = true;                
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.UseDefaultCredentials = false;
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
 
-                smtp.Credentials = new NetworkCredential(_loginEmail, _loginPassword);
+                Credentials = new NetworkCredential(_loginEmail, _loginPassword)
+            };
 
-                await smtp.SendMailAsync(mail);
-            }
+            await smtp.SendMailAsync(mail);
+            smtp.Dispose();
         }
     }
 }
