@@ -2,6 +2,7 @@
 using System.Net.Mail;
 using System.Threading.Tasks;
 using ApiEmails.Domain;
+using ApiEmails.Domain.Utils;
 using Microsoft.Extensions.Configuration;
 
 namespace ApiEmails.Services
@@ -28,17 +29,6 @@ namespace ApiEmails.Services
 
         public async Task SendEmail(EmailViewModel email)
         {
-            MailMessage mail = new MailMessage()
-            {
-                From = new MailAddress(_senderEmail),
-                Body = $@"<p>{email.Body}</p>
-                          <p><b>E-mail</b>: {email.Email}</p> 
-                          <p><b>Telefone</b>: {email.PhoneNumber}</p>",
-                Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : $"Contato via API Email - {email.Name}",
-                IsBodyHtml = true
-            };
-            mail.To.Add(_receiverEmail);
-
             var smtp = new SmtpClient(_smtp, _port)
             {
                 EnableSsl = true,
@@ -48,6 +38,7 @@ namespace ApiEmails.Services
                 Credentials = new NetworkCredential(_loginEmail, _loginPassword)
             };
 
+            var mail = EmailConstructor.ConstructMail(email, _senderEmail, _receiverEmail);
             await smtp.SendMailAsync(mail);
             smtp.Dispose();
         }
