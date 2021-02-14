@@ -38,7 +38,7 @@ namespace ApiEmails.Services
                 Credentials = new NetworkCredential(_loginEmail, _loginPassword)
             };
 
-            var mail = EmailConstructor.ConstructMail(email, _senderEmail, _receiverEmail);
+            MailMessage mail = EmailConstructor.ConstructMail(email, _senderEmail, _receiverEmail);
             await smtp.SendMailAsync(mail);
             smtp.Dispose();
         }
