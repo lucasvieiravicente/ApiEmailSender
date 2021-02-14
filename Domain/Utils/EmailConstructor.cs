@@ -6,13 +6,14 @@ namespace ApiEmails.Domain.Utils
     {
         public static MailMessage ConstructMail(EmailViewModel email, string senderEmail, string receiverEmail)
         {
-            MailMessage mail = new MailMessage()
+            var mail = new MailMessage()
             {
                 From = new MailAddress(senderEmail),
-                Body = $@"<p>{email.Body}</p>
+                Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : $"Contato via API Email",
+                Body = $@"<h2>Contato de {email.Name}</h2>
+                          <p>{email.Body}</p>
                           <p><b>E-mail</b>: {email.Email}</p> 
                           <p><b>Telefone</b>: {email.PhoneNumber}</p>",
-                Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : $"Contato via API Email - {email.Name}",
                 IsBodyHtml = true
             };
             mail.To.Add(receiverEmail);
