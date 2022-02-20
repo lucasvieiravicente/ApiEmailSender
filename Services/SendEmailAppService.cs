@@ -15,7 +15,7 @@ namespace ApiEmails.Services
         private readonly string _loginEmail;
         private readonly string _loginPassword;
         private readonly string _smtp;
-        private const int _port = 465;
+        private readonly int _port;
 
         public SendEmailAppService(IConfiguration configuration)
         {
@@ -24,6 +24,7 @@ namespace ApiEmails.Services
             _loginEmail = configuration["EmailsConfigs:Login"];
             _loginPassword = configuration["EmailsConfigs:Password"];
             _smtp = configuration["EmailsConfigs:Smtp"];
+            _port = int.Parse(configuration["EmailsConfigs:Port"]);
         }
 
         public async Task SendEmail(EmailViewModel email)
