@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using ApiEmails.Domain;
@@ -14,7 +15,7 @@ namespace ApiEmails.Services
         private readonly string _loginEmail;
         private readonly string _loginPassword;
         private readonly string _smtp;
-        private const int _port = 587;
+        private const int _port = 465;
 
         public SendEmailAppService(IConfiguration configuration)
         {
@@ -36,9 +37,17 @@ namespace ApiEmails.Services
                 Credentials = new NetworkCredential(_loginEmail, _loginPassword)
             };
 
-            MailMessage mail = EmailConstructor.ConstructMail(email, _senderEmail, _receiverEmail);
-            await smtp.SendMailAsync(mail);
-            smtp.Dispose();
+            try
+            {
+                MailMessage mail = EmailConstructor.ConstructMail(email, _senderEmail, _receiverEmail);
+                await smtp.SendMailAsync(mail);
+                smtp.Dispose();
+            }
+            catch
+            {
+                smtp.Dispose();
+                throw;
+            } 
         }
     }
 }
