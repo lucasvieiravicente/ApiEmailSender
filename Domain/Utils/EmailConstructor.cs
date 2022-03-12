@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using System.Text;
 
 namespace ApiEmails.Domain.Utils
 {
@@ -6,19 +7,23 @@ namespace ApiEmails.Domain.Utils
     {
         public static MailMessage ConstructMail(EmailViewModel email, string senderEmail, string receiverEmail)
         {
-            var mail = new MailMessage()
+            return new MailMessage(new MailAddress(senderEmail), new MailAddress(receiverEmail))
             {
-                From = new MailAddress(senderEmail),
                 Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : SystemMessages.SUBJECT_DEFAULT,
-                Body = $@"<h2>Contato de {email.Name}</h2>
-                          <p>{email.Body}</p>
-                          <p><b>E-mail</b>: {email.Email}</p> 
-                          <p><b>Telefone</b>: {email.PhoneNumber}</p>",
+                Body = CreateBody(email),
                 IsBodyHtml = true
             };
-            mail.To.Add(receiverEmail);
+        }
 
-            return mail;
+        private static string CreateBody(EmailViewModel email)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"<h2>Contato de {email.Name}</h2>");
+            sb.AppendLine($"<p>{email.Body}</p>");
+            sb.AppendLine($"<p><b>E-mail</b>: {email.Email}</p>");
+            sb.AppendLine($"<p><b>Telefone</b>: {email.PhoneNumber}</p>");
+
+            return sb.ToString();
         }
     }
 }
