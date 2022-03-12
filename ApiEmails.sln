@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiEmails", "ApiEmailSender
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiEmailsTest", "ApiEmailsTest\ApiEmailsTest.csproj", "{3285EF1B-DA4C-4AF6-8B19-B0855020E651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiEmailsTest", "..\ApiEmailsTest\ApiEmailsTest.csproj", "{4A5CD27A-4B03-49B0-9441-F8D5D46B0147}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
