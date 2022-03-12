@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'webapiemail'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7E9A82C104CC418C903083C73197279F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A9F96744521743AC99D76C2711265BFF }}
           package: .
