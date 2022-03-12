@@ -18,7 +18,6 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          path: ${{env.DOTNET_ROOT}}/ApiEmails
           dotnet-version: '3.1.301'
           include-prerelease: true
 
@@ -32,9 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-      
-
+          path: ${{env.DOTNET_ROOT}}/myapp   
         
   test:
     runs-on: windows-latest
@@ -44,10 +41,9 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          path: ${{env.DOTNET_ROOT}}/ApiEmailsTest
           dotnet-version: '6.0'
           
-      - name: Run Tests
+      - name: Run tests
         run: dotnet test ApiEmailsTest --no-restore --verbosity normal
         
   deploy:
