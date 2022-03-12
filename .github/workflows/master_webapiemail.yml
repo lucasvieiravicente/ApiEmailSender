@@ -12,18 +12,23 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
+    strategy:
+      matrix:
+        dotnet-version: ['3.1.x', '6.0.x']
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.301'
+          dotnet-version: ${{ matrix.dotnet-version }}
           include-prerelease: true
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        
+      - name: Run Tests
+        run: dotnet test --no-restore --verbosity normal
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -33,6 +38,7 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+      
 
   deploy:
     runs-on: windows-latest
