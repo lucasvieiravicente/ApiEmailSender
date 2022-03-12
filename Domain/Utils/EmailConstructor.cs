@@ -9,7 +9,7 @@ namespace ApiEmails.Domain.Utils
             var mail = new MailMessage()
             {
                 From = new MailAddress(senderEmail),
-                Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : $"Contato via API Email",
+                Subject = !string.IsNullOrEmpty(email.Subject) ? email.Subject : SystemMessages.SUBJECT_DEFAULT,
                 Body = $@"<h2>Contato de {email.Name}</h2>
                           <p>{email.Body}</p>
                           <p><b>E-mail</b>: {email.Email}</p> 

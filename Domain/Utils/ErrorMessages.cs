@@ -1,6 +1,6 @@
 ﻿namespace ApiEmails.Domain.Utils
 {
-    public class ErrorMessages
+    public struct ErrorMessages
     {
         public const string NameNecessary = "<li>É necessário um nome</li>";
         public const string EmailNecessary = "<li>É necesário um e-mail</li>";
