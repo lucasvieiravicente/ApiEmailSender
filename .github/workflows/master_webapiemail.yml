@@ -12,26 +12,21 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        dotnet-version: ['3.1.x', '6.0.x']
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          path: ${{env.DOTNET_ROOT}}/ApiEmails
+          dotnet-version: '3.1.301'
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
-        
-      - name: Run Tests
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet build ApiEmails --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ApiEmails -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -40,6 +35,21 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/myapp
       
 
+        
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          path: ${{env.DOTNET_ROOT}}/ApiEmailsTest
+          dotnet-version: '6.0'
+          
+      - name: Run Tests
+        run: dotnet test ApiEmailsTest --no-restore --verbosity normal
+        
   deploy:
     runs-on: windows-latest
     needs: build
